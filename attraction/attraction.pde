@@ -1,7 +1,7 @@
 ArrayList<Attractor> a;
 ArrayList<Particle> p;
 int numParticles, scale, numAttactors, alpha;
-float maxSpeed, speed, vinit, spread;
+float maxSpeed, speed, vinit, spread, strW;
 
 void reset() {
   //the reset function randomizes all parameters and restarts the simulation
@@ -14,9 +14,11 @@ void reset() {
   scale = round(random(3, 8)); //value above 3. Sets the margins as 1/scale
   numAttactors = round(random(1, 10)); //Number of attractors. 1 - 10 works well.
   vinit = random(3, 7); //initial velocity of particles. Creates spread. 3 - 7 works well.
-  spread = random(0, 0.1); //spread in initial position of the particles
+  spread = random(0, 1); //spread in initial position of the particles
+  strW = sqrt(random(32)); //stroke weight. set to 1 for crisp lines
   
   //write parameter values to the console for reference if you really love a cretain result
+  println("===============================");
   println("numParticles: " + numParticles);
   println("maxSpeed: " + maxSpeed);
   println("speed: " + speed);
@@ -24,6 +26,7 @@ void reset() {
   println("numAttactors: " + numAttactors);
   println("vinit: " + vinit);
   println("spread: " + spread);
+  println("strokeWeight: " + strW);
   
   //fill the screen with blackness
   background(0);
@@ -44,14 +47,16 @@ void reset() {
 
 void setup() {
   reset();
-  //size(1200, 1200);
-  fullScreen();
+  size(1200, 1200);
+  //fullScreen();
 }
 
 void draw() {
   alpha = round(3 - frameCount/500);
-  if (alpha == -1) {
+  if (alpha == 0) {
     //using -1 instead of 0 gives us some time to enjoy the final result
+    String filename = "/Users/hugo/Desktop/" + numParticles + "-" + round(maxSpeed) + "-" + round(speed) + "-" + scale + "-" + numAttactors + "-" + round(vinit) + "-" + round(10*spread) + "-" + round(strW);
+    save(filename);
     reset();
   }
   //loop throught the attractors
