@@ -53,7 +53,7 @@ void draw() {
   alpha = round(3 - frameCount/random(300,600));
   if (alpha == 0) {
     //using -1 instead of 0 gives us some time to enjoy the final result
-    String filename = "examples/" + numParticles + "-" + round(maxSpeed) + "-" + round(speed) + "-" + scale + "-" + numAttactors + "-" + round(vinit) + "-" + round(10*spread) + "-" + round(strW) + "-" + colorOffset;
+    String filename = "examples/" + numParticles + "-" + round(maxSpeed) + "-" + round(speed) + "-" + scale + "-" + numAttactors + "-" + round(vinit) + "-" + round(10*spread) + "-" + round(strW) + "-" + colorOffset + ".jpg";
     //save(filename);
     reset();
   }
