@@ -13,6 +13,10 @@ class Particle {
     strokeWeight(strW);
     int v = round(vel.mag()); //the magnitude of the velocity
     int c = round(map(v * random(0.9, 1.1), 0, maxSpeed, 0, 255)); //color is mapped to the speed of the particle with some random difference to smooth out the gradients
+    c = c - colorOffset;
+    if (c < 0) {
+      c += 255;
+    }
     colorMode(HSB, 255, 100, 100);
     stroke(c, 100, 100, alpha);
     line(pos.x, pos.y, prev.x, prev.y);
