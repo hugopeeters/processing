@@ -8,7 +8,7 @@
 
 ArrayList<Attractor> a;
 ArrayList<Particle> p;
-int numParticles, scale, numAttactors, alpha;
+int numParticles, scale, numAttactors, alpha, colorOffset;
 float maxSpeed, speed, vinit, spread, strW;
 
 void reset() {
@@ -24,18 +24,8 @@ void reset() {
   vinit = random(3, 7); //initial velocity of particles. Creates spread. 3 - 7 works well.
   spread = random(0, 1); //spread in initial position of the particles
   strW = sqrt(random(32)); //stroke weight. set to 1 for crisp lines
-  
-  //write parameter values to the console for reference if you really love a cretain result
-  println("===============================");
-  println("numParticles: " + numParticles);
-  println("maxSpeed: " + maxSpeed);
-  println("speed: " + speed);
-  println("scale: " + scale);
-  println("numAttactors: " + numAttactors);
-  println("vinit: " + vinit);
-  println("spread: " + spread);
-  println("strokeWeight: " + strW);
-  
+  colorOffset = round(random(255));
+    
   //fill the screen with blackness
   background(0);
   
@@ -55,15 +45,15 @@ void reset() {
 
 void setup() {
   reset();
-  size(1200, 1200);
-  //fullScreen();
+  //size(1200, 1200);
+  fullScreen();
 }
 
 void draw() {
   alpha = round(3 - frameCount/random(300,600));
   if (alpha == 0) {
     //using -1 instead of 0 gives us some time to enjoy the final result
-    String filename = "/Users/hugo/Documents/processing_master/processing/attraction/examples/" + numParticles + "-" + round(maxSpeed) + "-" + round(speed) + "-" + scale + "-" + numAttactors + "-" + round(vinit) + "-" + round(10*spread) + "-" + round(strW);
+    String filename = "/Users/hugo/Documents/processing_master/processing/attraction/examples/" + numParticles + "-" + round(maxSpeed) + "-" + round(speed) + "-" + scale + "-" + numAttactors + "-" + round(vinit) + "-" + round(10*spread) + "-" + round(strW) + "-" + colorOffset;
     //save(filename);
     reset();
   }
