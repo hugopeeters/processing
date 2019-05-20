@@ -22,7 +22,7 @@ void reset() {
   scale = round(random(3, 8)); //value above 3. Sets the margins as 1/scale
   numAttactors = round(random(1, 10)); //Number of attractors. 1 - 10 works well.
   vinit = random(3, 7); //initial velocity of particles. Creates spread. 3 - 7 works well.
-  spread = random(0, 1); //spread in initial position of the particles
+  spread = random(0, 0.2); //spread in initial position of the particles
   strW = sqrt(random(32)); //stroke weight. set to 1 for crisp lines
   colorOffset = round(random(255));
     
@@ -32,7 +32,7 @@ void reset() {
   //create attractors and particles
   a = new ArrayList<Attractor>();
   p = new ArrayList<Particle>();
-  PVector pos = new PVector(width/scale, height/scale);
+  PVector pos = new PVector(random(width/scale, (scale-1)*width/scale), random(height/scale, (scale-1)*height/scale));
   for ( int i = 0; i < numParticles; i++) {
     float x = pos.x * random(1 + spread, 1 - spread); 
     float y = pos.y * random(1 + spread, 1 - spread); 
