@@ -81,3 +81,8 @@ void draw() {
     p.get(i).update(); //update the particles physics
   }
 }
+
+void keyPressed(){
+  //press any key ro skip to the next simulation
+  reset();
+}
