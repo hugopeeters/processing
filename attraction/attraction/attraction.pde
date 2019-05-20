@@ -1,3 +1,11 @@
+//Attractors
+// by HugoPeeters
+// Based on the CodingTrain challenge 56
+// A few thousand particles get attracted by a handful of moving attractors
+// The particles' paths are colored by their speed
+// The initial conditions and speed restrictions are randomized to create different results.
+// The resulting images can be saved.
+
 ArrayList<Attractor> a;
 ArrayList<Particle> p;
 int numParticles, scale, numAttactors, alpha;
@@ -56,7 +64,7 @@ void draw() {
   if (alpha == 0) {
     //using -1 instead of 0 gives us some time to enjoy the final result
     String filename = "/Users/hugo/Documents/processing_master/processing/attraction/examples/" + numParticles + "-" + round(maxSpeed) + "-" + round(speed) + "-" + scale + "-" + numAttactors + "-" + round(vinit) + "-" + round(10*spread) + "-" + round(strW);
-    save(filename);
+    //save(filename);
     reset();
   }
   //loop throught the attractors
