@@ -23,7 +23,7 @@ void reset() {
   numAttactors = round(random(1, 10)); //Number of attractors. 1 - 10 works well.
   vinit = random(3, 7); //initial velocity of particles. Creates spread. 3 - 7 works well.
   spread = random(0, 0.2); //spread in initial position of the particles
-  strW = sqrt(random(32)); //stroke weight. set to 1 for crisp lines
+  strW = sqrt(random(1, 4)); //stroke weight. set to 1 for crisp lines
   colorOffset = round(random(255));
     
   //fill the screen with blackness
@@ -45,12 +45,12 @@ void reset() {
 
 void setup() {
   reset();
-  size(800, 800);
+  size(1024, 600);
   //fullScreen();
 }
 
 void draw() {
-  alpha = round(3 - frameCount/random(300,600));
+  alpha = round(3 - frameCount/random(300,4800));
   if (alpha == 0) {
     //using -1 instead of 0 gives us some time to enjoy the final result
     String filename = "examples/" + numParticles + "-" + round(maxSpeed) + "-" + round(speed) + "-" + scale + "-" + numAttactors + "-" + round(vinit) + "-" + round(10*spread) + "-" + round(strW) + "-" + colorOffset + ".jpg";
