@@ -5,6 +5,7 @@
 // The particles' paths are colored by their speed
 // The initial conditions and speed restrictions are randomized to create different results.
 // The resulting images can be saved.
+// Press any key to move to the next simulation.
 
 ArrayList<Attractor> a;
 ArrayList<Particle> p;
