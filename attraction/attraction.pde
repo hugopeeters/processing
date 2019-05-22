@@ -20,7 +20,7 @@ void reset() {
   //set parameters to random values within boundaries
   numParticles = round(random(500, 2500)); //number of particles
   maxSpeed = random(1, 50); //maximum speed of the particles.
-  speed = 0; //random(0, 3); //speed of the attactors moving in random directions and bouncing off the walls, best results with 0 - 1.
+  speed = random(0, 3); //speed of the attactors moving in random directions and bouncing off the walls, best results with 0 - 1.
   numAttactors = round(random(1, 10)); //Number of attractors. 1 - 10 works well.
   vinit = random(3, 7); //initial velocity of particles. Creates spread. 3 - 7 works well.
   spread = random(0, 0.2); //spread in initial position of the particles
