@@ -5,7 +5,7 @@ class Attractor {
   
   Attractor(){
     //the scale prevents attractors starting too far from the center of the screen
-    pos = new PVector(random(width/scale, (scale-1)*width/scale), random(height/scale, (scale-1)*height/scale));
+    pos = new PVector(random(10, width - 10), random(10, height - 10));
     vel = PVector.random2D();
     vel.setMag(speed);
     mass = random(0.1, 10);

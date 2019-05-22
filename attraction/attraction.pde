@@ -14,30 +14,33 @@ float maxSpeed, speed, vinit, spread, strW;
 void reset() {
   //the reset function randomizes all parameters and restarts the simulation
   frameCount = 0; //the framecount is being used to slowly decrease the alpha
-  
+
   //set parameters to random values within boundaries
   numParticles = round(random(500, 2500)); //number of particles
   maxSpeed = random(1, 50); //maximum speed of the particles.
-  speed = random(0, 3); //speed of the attactors moving in random directions and bouncing off the walls, best results with 0 - 1.
-  scale = round(random(3, 8)); //value above 3. Sets the margins as 1/scale
+  speed = 0; //random(0, 3); //speed of the attactors moving in random directions and bouncing off the walls, best results with 0 - 1.
   numAttactors = round(random(1, 10)); //Number of attractors. 1 - 10 works well.
   vinit = random(3, 7); //initial velocity of particles. Creates spread. 3 - 7 works well.
   spread = random(0, 0.2); //spread in initial position of the particles
   strW = sqrt(random(1, 4)); //stroke weight. set to 1 for crisp lines
   colorOffset = round(random(255));
-    
+
   //fill the screen with blackness
   background(0);
-  
+
   //create attractors and particles
-  a = new ArrayList<Attractor>();
   p = new ArrayList<Particle>();
-  PVector pos = new PVector(random(width/scale, (scale-1)*width/scale), random(height/scale, (scale-1)*height/scale));
+  //pick random position
+  float x = random(10, width - 10);
+  float y = random(10, height - 10);
   for ( int i = 0; i < numParticles; i++) {
-    float x = pos.x * random(1 + spread, 1 - spread); 
-    float y = pos.y * random(1 + spread, 1 - spread); 
-    p.add(new Particle(new PVector(x, y)));
+    //add spread
+    float xi = x *  random(1 + spread, 1 - spread);
+    float yi = y *  random(1 + spread, 1 - spread);
+    p.add(new Particle(new PVector(xi, yi)));
   }
+
+  a = new ArrayList<Attractor>();  
   for ( int i = 0; i < numAttactors; i++) {
     a.add(new Attractor());
   }
@@ -50,7 +53,7 @@ void setup() {
 }
 
 void draw() {
-  alpha = round(3 - frameCount/random(300,4800));
+  alpha = round(3 - frameCount/random(300, 4800));
   if (alpha == 0) {
     //using -1 instead of 0 gives us some time to enjoy the final result
     String filename = "examples/" + numParticles + "-" + round(maxSpeed) + "-" + round(speed) + "-" + scale + "-" + numAttactors + "-" + round(vinit) + "-" + round(10*spread) + "-" + round(strW) + "-" + colorOffset + ".jpg";
@@ -72,7 +75,7 @@ void draw() {
   }
 }
 
-void keyPressed(){
+void keyPressed() {
   //press any key ro skip to the next simulation
   reset();
 }
