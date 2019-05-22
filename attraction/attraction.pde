@@ -8,8 +8,9 @@
 
 ArrayList<Attractor> a;
 ArrayList<Particle> p;
-int numParticles, scale, numAttactors, alpha, colorOffset;
+int numParticles, numAttactors, alpha, colorOffset;
 float maxSpeed, speed, vinit, spread, strW;
+int margin = 50;
 
 void reset() {
   //the reset function randomizes all parameters and restarts the simulation
@@ -31,8 +32,8 @@ void reset() {
   //create attractors and particles
   p = new ArrayList<Particle>();
   //pick random position
-  float x = random(10, width - 10);
-  float y = random(10, height - 10);
+  float x = random(margin, width - margin);
+  float y = random(margin, height - margin);
   for ( int i = 0; i < numParticles; i++) {
     //add spread
     float xi = x *  random(1 + spread, 1 - spread);
@@ -56,7 +57,7 @@ void draw() {
   alpha = round(3 - frameCount/random(300, 4800));
   if (alpha == 0) {
     //using -1 instead of 0 gives us some time to enjoy the final result
-    String filename = "examples/" + numParticles + "-" + round(maxSpeed) + "-" + round(speed) + "-" + scale + "-" + numAttactors + "-" + round(vinit) + "-" + round(10*spread) + "-" + round(strW) + "-" + colorOffset + ".jpg";
+    String filename = "examples/" + numParticles + "-" + round(maxSpeed) + "-" + round(speed) + "-" + numAttactors + "-" + round(vinit) + "-" + round(10*spread) + "-" + round(strW) + "-" + colorOffset + ".jpg";
     //save(filename);
     reset();
   }
