@@ -10,7 +10,7 @@
 ArrayList<Attractor> a;
 ArrayList<Particle> p;
 int numParticles, numAttactors, alpha, colorOffset;
-float maxSpeed, speed, vinit, spread, strW;
+float maxSpeed, speed, vinit, spread, strW, dimX, dimY;
 int margin = 50;
 
 void reset() {
@@ -50,11 +50,13 @@ void reset() {
 
 void setup() {
   reset();
-  size(1024, 600);
-  //fullScreen();
+  //size(1024, 600);
+  fullScreen();
+  noCursor();
 }
 
 void draw() {
+  //background(0, 100);
   alpha = round(3 - frameCount/random(300, 4800));
   if (alpha == 0) {
     //using -1 instead of 0 gives us some time to enjoy the final result
