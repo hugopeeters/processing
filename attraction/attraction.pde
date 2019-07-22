@@ -26,6 +26,7 @@ void reset() {
   spread = random(0, 0.2); //spread in initial position of the particles
   strW = sqrt(random(1, 4)); //stroke weight. set to 1 for crisp lines
   colorOffset = round(random(255));
+  //IDEA: add number of starting points
 
   //fill the screen with blackness
   background(0);
