@@ -11,6 +11,7 @@ int maxGens;
 BarChart ageChart;
 int[] ages;
 int maxAge;
+int numStarters = 100;
 
 void setup() {
   size(1700, 850);
@@ -20,7 +21,7 @@ void setup() {
   field[0] = new PVector(25, 25);
   field[1] = new PVector(825, 825);
   generations = new int[maxGens];
-  ancColors = createColorArray(50);
+  ancColors = createColorArray(numStarters);
   ancestorSeries = new ArrayList<int[]>();
   for (int i = 0; i < maxGens; i++) {
     generations[i] = 0;
@@ -36,7 +37,7 @@ void setup() {
   frameRate(30);
   target = new PVector(0, 0);
   vehicles = new ArrayList<Vehicle>();
-  for (int i = 0; i < 50; i++) {
+  for (int i = 0; i < numStarters; i++) {
     vehicles.add(new Vehicle(new PVector(random(field[0].x, field[1].x), random(field[0].y, field[1].y)), i));
   }
   food = new ArrayList<Food>();

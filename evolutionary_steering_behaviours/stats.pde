@@ -29,16 +29,16 @@ void calculateStats() {
   }
 
   //ancestors
-  int[] ancestors = new int[50];
-  for (int i = 0; i < 50; i++) {
+  int[] ancestors = new int[numStarters];
+  for (int i = 0; i < numStarters; i++) {
     ancestors[i] = 0;
   }
   for (int i = 0; i < vehicles.size(); i++) {
     int anc;
-    if (vehicles.get(i).ancestor < 50 - 1) {
+    if (vehicles.get(i).ancestor < numStarters - 1) {
       anc = vehicles.get(i).ancestor;
     } else { 
-      anc = 50 - 1;
+      anc = numStarters - 1;
     }
     ancestors[anc] += 1;
   }

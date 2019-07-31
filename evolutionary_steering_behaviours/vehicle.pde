@@ -18,7 +18,7 @@ class Vehicle {
     acc = new PVector(0, 0);
     maxForce = 1;
     maxVel = 5;
-    r = 12;
+    r = 18;
     dna = new DNA();
     health = 1;
     birthDate = 0;
@@ -34,7 +34,7 @@ class Vehicle {
     acc = new PVector(0, 0);
     maxForce = 1;
     maxVel = 5;
-    r = 12;
+    r = 18;
     this.dna = dna;
     this.dna.mutate();
     health = 1;
@@ -144,19 +144,16 @@ class Vehicle {
     translate(pos.x, pos.y);
     rotate(vel.heading() + PI/2);
     beginShape();
-    color c = lerpColor(color(255, 0, 0), color(0, 255, 0), health);
-    if (best) {
-      fill(255);
-    } else {
-      noFill();
-    }
-    stroke(c);
+    //color c = lerpColor(color(255, 0, 0), color(0, 255, 0), health);
+    //stroke(c);
+    noStroke();
+    fill(ancColors[ancestor]);
     vertex(0, 0 - r);
     vertex(0 - r/3, 0);
     vertex(0 + r/3, 0);
     endShape(CLOSE);
     //debugging visuals
-    if (mousePressed || best) {
+    if (mousePressed && best) {
       noFill();
       ellipseMode(RADIUS);
       stroke(0, 255, 0, 200);

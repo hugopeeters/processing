@@ -1,0 +1,8 @@
+class Bucket {
+ 
+  Bucket() {
+    
+  }
+  
+  
+}

@@ -33,7 +33,7 @@ void addPoison() {
 }
 
 void addFood() {
-  while (food.size() < 100) {
+  while (food.size() < numStarters) {
     food.add(new Food(new PVector(random(field[0].x + 5, field[1].x - 5), random(field[0].y + 5, field[1].y - 5)), true, food.size()));
   }
 }
