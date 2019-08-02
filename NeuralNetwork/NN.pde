@@ -100,7 +100,7 @@ class NN {
         gradients.data[i][j] = dsigmoid(gradients.data[i][j]);
       }
     }
-    gradients = dotProduct(gradients, errors_output);
+    gradients = multiplyMatrices(gradients, errors_output);
     gradients.multiply(lr);
 
     //calculate deltas
@@ -123,7 +123,7 @@ class NN {
         hidden_gradients.data[i][j] = dsigmoid(hidden_gradients.data[i][j]);
       }
     }
-    hidden_gradients = dotProduct(hidden_gradients, hidden_errors);
+    hidden_gradients = multiplyMatrices(hidden_gradients, hidden_errors);
     hidden_gradients.multiply(lr);
 
     //calculate deltas

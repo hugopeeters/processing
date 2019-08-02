@@ -61,6 +61,9 @@ class Matrix {
 //matrix-wise operations (static functions)
 
 Matrix dotProduct(Matrix A, Matrix B) {
+  if(A.cols != B.rows){
+    println("ERROR " + A.cols + " != " + B.rows);
+  }
   Matrix AB = new Matrix(A.rows, B.cols);
   for (int i = 0; i < AB.rows; i++) {
     for (int j = 0; j < AB.cols; j++) {
@@ -81,6 +84,16 @@ Matrix transpose(Matrix M) {
     }
   }
   return T;
+}
+
+Matrix multiplyMatrices(Matrix A, Matrix B) {
+  Matrix S = new Matrix(A.cols, A.rows);
+  for (int i = 0; i < A.rows; i++) {
+    for (int j = 0; j < A.cols; j++) {
+      S.data[j][i] = A.data[i][j] * B.data[i][j];
+    }
+  }
+  return S;
 }
 
 Matrix addMatrices(Matrix A, Matrix B) {
