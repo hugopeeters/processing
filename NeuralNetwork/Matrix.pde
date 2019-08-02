@@ -82,3 +82,23 @@ Matrix transpose(Matrix M) {
   }
   return T;
 }
+
+Matrix addMatrices(Matrix A, Matrix B) {
+  Matrix S = new Matrix(A.cols, A.rows);
+  for (int i = 0; i < A.rows; i++) {
+    for (int j = 0; j < A.cols; j++) {
+      S.data[j][i] = A.data[i][j] + B.data[i][j];
+    }
+  }
+  return S;
+}
+
+Matrix subtractMatrices(Matrix A, Matrix B) {
+  Matrix S = new Matrix(A.cols, A.rows);
+  for (int i = 0; i < A.rows; i++) {
+    for (int j = 0; j < A.cols; j++) {
+      S.data[j][i] = A.data[i][j] - B.data[i][j];
+    }
+  }
+  return S;
+}

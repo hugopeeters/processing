@@ -1,3 +1,11 @@
+float sigmoid(float x) {
+  return 1 / (1 + exp(-x));
+}
+
+float dsigmoid(float x) {
+  return x * (1 + x);
+}
+
 class NN {
 
   int input_count;
@@ -25,25 +33,25 @@ class NN {
     for (int i = 0; i < input_array.length; i++) {
       inputs.data[i][0] = input_array[i];
     }
-    inputs.printMatrix();
-    weights_ih.printMatrix();
+    //inputs.printMatrix();
+    //weights_ih.printMatrix();
 
     //calculate hidden layer values
     hidden = dotProduct(weights_ih, inputs);
-    hidden.printMatrix();
+    //hidden.printMatrix();
     for (int i = 0; i < hidden_count; i++) {
       hidden.data[i][0] += bias_h.data[i][0];
       hidden.data[i][0] = sigmoid(hidden.data[i][0]);
     }
 
-    weights_ho.printMatrix();
+    //weights_ho.printMatrix();
     //calculate output layer values
     outputs = dotProduct(weights_ho, hidden);
     for (int i = 0; i < output_count; i++) {
       outputs.data[i][0] += bias_o.data[i][0];
       outputs.data[i][0] = sigmoid(outputs.data[i][0]);
     }
-    outputs.printMatrix();
+    //outputs.printMatrix();
 
     //output as array
     float[] output = new float[output_count];
@@ -53,11 +61,35 @@ class NN {
     return output;
   }
 
-  float sigmoid(float x) {
-    return 1 / (1 + exp(-x));
-  }
-
   void train(float[] training_data, float[] target) {
-    //TODO
+    for (int i = 0; i < training_data.length; i++) {
+      inputs.data[i][0] = training_data[i];
+    }
+    //inputs.printMatrix();
+    //weights_ih.printMatrix();
+
+    //calculate hidden layer values
+    hidden = dotProduct(weights_ih, inputs);
+    //hidden.printMatrix();
+    for (int i = 0; i < hidden_count; i++) {
+      hidden.data[i][0] += bias_h.data[i][0];
+      hidden.data[i][0] = sigmoid(hidden.data[i][0]);
+    }
+
+    //weights_ho.printMatrix();
+    //calculate output layer values
+    outputs = dotProduct(weights_ho, hidden);
+    for (int i = 0; i < output_count; i++) {
+      outputs.data[i][0] += bias_o.data[i][0];
+      outputs.data[i][0] = sigmoid(outputs.data[i][0]);
+    }
+    //outputs.printMatrix();
+
+    Matrix T = new Matrix(target.length, 1);
+    for (int i = 0; i < target.length; i++) {
+      T.data[i][0] = target[i];
+    }
+
+    Matrix errors_output = subtractMatrices(T, outputs);
   }
 }
