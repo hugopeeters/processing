@@ -32,7 +32,7 @@ class Matrix {
 
   //element-wise operations
 
-  void multiply(int n) {
+  void multiply(float n) {
     for (int i = 0; i < this.rows; i++) {
       for (int j = 0; j < this.cols; j++) {
         this.data[i][j] *= n;
@@ -40,7 +40,7 @@ class Matrix {
     }
   }
 
-  void add(int n) {
+  void add(float n) {
     for (int i = 0; i < this.rows; i++) {
       for (int j = 0; j < this.cols; j++) {
         this.data[i][j] += n;
@@ -48,7 +48,7 @@ class Matrix {
     }
   }
 
-  void subtract(int n) {
+  void subtract(float n) {
     for (int i = 0; i < this.rows; i++) {
       for (int j = 0; j < this.cols; j++) {
         this.data[i][j] -= n;

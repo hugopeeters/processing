@@ -3,7 +3,7 @@ float sigmoid(float x) {
 }
 
 float dsigmoid(float x) {
-  return x * (1 + x);
+  return x * (1 - x);
 }
 
 class NN {
@@ -28,7 +28,7 @@ class NN {
     bias_o.randomize();
   }
 
-  float[] feedForward(float[] input_array) {
+  float[] predict(float[] input_array) {
     //fill input matrix
     for (int i = 0; i < input_array.length; i++) {
       inputs.data[i][0] = input_array[i];
@@ -90,6 +90,49 @@ class NN {
       T.data[i][0] = target[i];
     }
 
+    //calculate output errors
     Matrix errors_output = subtractMatrices(T, outputs);
+
+    //calculate output gradient
+    Matrix gradients = new Matrix(errors_output.rows, errors_output.cols);
+    for (int i = 0; i < gradients.rows; i++) {
+      for (int j = 0; j < gradients.cols; j++) {
+        gradients.data[i][j] = dsigmoid(gradients.data[i][j]);
+      }
+    }
+    gradients = dotProduct(gradients, errors_output);
+    gradients.multiply(lr);
+
+    //calculate deltas
+    Matrix hidden_t = transpose(hidden);
+    Matrix weights_ho_deltas = dotProduct(gradients, hidden_t);
+
+    //Apply deltas to the weights
+    weights_ho = addMatrices(weights_ho, weights_ho_deltas);
+    //Adjust bias
+    bias_o = addMatrices(bias_o, gradients);
+
+    //Calculate the hidden layer errors
+    Matrix who_t = transpose(weights_ho);
+    Matrix hidden_errors = dotProduct(who_t, errors_output);
+
+    //calculate hidden gradient
+    Matrix hidden_gradients = new Matrix(hidden.rows, hidden.cols);
+    for (int i = 0; i < hidden_gradients.rows; i++) {
+      for (int j = 0; j < hidden_gradients.cols; j++) {
+        hidden_gradients.data[i][j] = dsigmoid(hidden_gradients.data[i][j]);
+      }
+    }
+    hidden_gradients = dotProduct(hidden_gradients, hidden_errors);
+    hidden_gradients.multiply(lr);
+
+    //calculate deltas
+    Matrix inputs_t = transpose(inputs);
+    Matrix weights_ih_deltas = dotProduct(hidden_gradients, inputs_t);
+
+    //Apply deltas to the weights
+    weights_ih = addMatrices(weights_ih, weights_ih_deltas);
+    //Adjust bias
+    bias_h = addMatrices(bias_h, hidden_gradients);
   }
 }
