@@ -4,7 +4,7 @@ float[] oo = {0, 0};
 float[] ol = {0, 1};
 float[] lo = {1, 0};
 float[] ll = {1, 1};
-float[] o = {1};
+float[] o = {0};
 float[] l = {1};
 
 void setup() {
@@ -26,7 +26,7 @@ void setup() {
 
   float[] in = {1, 0};
   float[] out = brain.predict(in);
-  printArray(out);
+  //printArray(out);
 }
 
 void draw() {

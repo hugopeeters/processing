@@ -20,10 +20,11 @@ class Matrix {
   }
 
   void printMatrix() {
+    println(this.rows + "x" + this.cols);
     for (int i = 0; i < this.rows; i++) {
       for (int j = 0; j < this.cols; j++) {
         print(this.data[i][j]);
-        print(" ");
+        print(", ");
       }
       println();
     }
@@ -61,9 +62,7 @@ class Matrix {
 //matrix-wise operations (static functions)
 
 Matrix dotProduct(Matrix A, Matrix B) {
-  if(A.cols != B.rows){
-    println("ERROR " + A.cols + " != " + B.rows);
-  }
+  //println(A.rows + " " + A.cols + " " + B.rows + " " + B.cols);
   Matrix AB = new Matrix(A.rows, B.cols);
   for (int i = 0; i < AB.rows; i++) {
     for (int j = 0; j < AB.cols; j++) {
@@ -87,30 +86,30 @@ Matrix transpose(Matrix M) {
 }
 
 Matrix multiplyMatrices(Matrix A, Matrix B) {
-  Matrix S = new Matrix(A.cols, A.rows);
+  Matrix S = new Matrix(A.rows, A.cols);
   for (int i = 0; i < A.rows; i++) {
     for (int j = 0; j < A.cols; j++) {
-      S.data[j][i] = A.data[i][j] * B.data[i][j];
+      S.data[i][j] = A.data[i][j] * B.data[i][j];
     }
   }
   return S;
 }
 
 Matrix addMatrices(Matrix A, Matrix B) {
-  Matrix S = new Matrix(A.cols, A.rows);
+  Matrix S = new Matrix(A.rows, A.cols);
   for (int i = 0; i < A.rows; i++) {
     for (int j = 0; j < A.cols; j++) {
-      S.data[j][i] = A.data[i][j] + B.data[i][j];
+      S.data[i][j] = A.data[i][j] + B.data[i][j];
     }
   }
   return S;
 }
 
 Matrix subtractMatrices(Matrix A, Matrix B) {
-  Matrix S = new Matrix(A.cols, A.rows);
+  Matrix S = new Matrix(A.rows, A.cols);
   for (int i = 0; i < A.rows; i++) {
     for (int j = 0; j < A.cols; j++) {
-      S.data[j][i] = A.data[i][j] - B.data[i][j];
+      S.data[i][j] = A.data[i][j] - B.data[i][j];
     }
   }
   return S;

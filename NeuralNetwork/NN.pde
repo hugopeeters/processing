@@ -51,7 +51,7 @@ class NN {
       outputs.data[i][0] += bias_o.data[i][0];
       outputs.data[i][0] = sigmoid(outputs.data[i][0]);
     }
-    //outputs.printMatrix();
+    outputs.printMatrix();
 
     //output as array
     float[] output = new float[output_count];
@@ -61,15 +61,20 @@ class NN {
     return output;
   }
 
+//TRAINING
+
   void train(float[] training_data, float[] target) {
     for (int i = 0; i < training_data.length; i++) {
       inputs.data[i][0] = training_data[i];
     }
+    //println("inputs");
     //inputs.printMatrix();
+    //println("weights_ih");
     //weights_ih.printMatrix();
 
     //calculate hidden layer values
     hidden = dotProduct(weights_ih, inputs);
+    //println("hidden");
     //hidden.printMatrix();
     for (int i = 0; i < hidden_count; i++) {
       hidden.data[i][0] += bias_h.data[i][0];
@@ -83,52 +88,83 @@ class NN {
       outputs.data[i][0] += bias_o.data[i][0];
       outputs.data[i][0] = sigmoid(outputs.data[i][0]);
     }
+    //println("outputs");
     //outputs.printMatrix();
 
     Matrix T = new Matrix(target.length, 1);
     for (int i = 0; i < target.length; i++) {
       T.data[i][0] = target[i];
     }
+    //println("targets");
+    //T.printMatrix();
 
     //calculate output errors
-    Matrix errors_output = subtractMatrices(T, outputs);
+    Matrix errors_output = subtractMatrices(outputs, T);
+    //println("errors_output");
+    //errors_output.printMatrix();
 
     //calculate output gradient
     Matrix gradients = new Matrix(errors_output.rows, errors_output.cols);
+    //println("gradients");
+    //gradients.printMatrix();
     for (int i = 0; i < gradients.rows; i++) {
       for (int j = 0; j < gradients.cols; j++) {
         gradients.data[i][j] = dsigmoid(gradients.data[i][j]);
       }
     }
+    //gradients.printMatrix();
     gradients = multiplyMatrices(gradients, errors_output);
+    //gradients.printMatrix();
     gradients.multiply(lr);
+    //gradients.printMatrix();
 
     //calculate deltas
     Matrix hidden_t = transpose(hidden);
+    //println("hidden_t");
+    //hidden_t.printMatrix();
     Matrix weights_ho_deltas = dotProduct(gradients, hidden_t);
+    //println("weights_ho_deltas");
+    //weights_ho_deltas.printMatrix();
 
     //Apply deltas to the weights
     weights_ho = addMatrices(weights_ho, weights_ho_deltas);
+    //println("weights_ho");
+    //weights_ho.printMatrix();
     //Adjust bias
     bias_o = addMatrices(bias_o, gradients);
+    //println("bias_o");
+    //bias_o.printMatrix();
 
     //Calculate the hidden layer errors
     Matrix who_t = transpose(weights_ho);
+    //println("Who_t");
+    //who_t.printMatrix();
     Matrix hidden_errors = dotProduct(who_t, errors_output);
+    //println("hidden_errors");
+    //hidden_errors.printMatrix();
 
     //calculate hidden gradient
     Matrix hidden_gradients = new Matrix(hidden.rows, hidden.cols);
+    //println("hidden_gradients");
+    //hidden_gradients.printMatrix();
     for (int i = 0; i < hidden_gradients.rows; i++) {
       for (int j = 0; j < hidden_gradients.cols; j++) {
         hidden_gradients.data[i][j] = dsigmoid(hidden_gradients.data[i][j]);
       }
     }
+    //hidden_gradients.printMatrix();
     hidden_gradients = multiplyMatrices(hidden_gradients, hidden_errors);
+    //hidden_gradients.printMatrix();
     hidden_gradients.multiply(lr);
+    //hidden_gradients.printMatrix();
 
     //calculate deltas
     Matrix inputs_t = transpose(inputs);
+    //println("inputs_t");
+    //inputs_t.printMatrix();
     Matrix weights_ih_deltas = dotProduct(hidden_gradients, inputs_t);
+    //println("weights_ih_deltas");
+    //weights_ih_deltas.printMatrix();
 
     //Apply deltas to the weights
     weights_ih = addMatrices(weights_ih, weights_ih_deltas);
