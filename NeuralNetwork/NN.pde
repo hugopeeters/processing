@@ -33,6 +33,7 @@ class NN {
     hidden.printMatrix();
     for (int i = 0; i < hidden_count; i++) {
       hidden.data[i][0] += bias_h.data[i][0];
+      hidden.data[i][0] = sigmoid(hidden.data[i][0]);
     }
 
     weights_ho.printMatrix();
@@ -40,9 +41,10 @@ class NN {
     outputs = dotProduct(weights_ho, hidden);
     for (int i = 0; i < output_count; i++) {
       outputs.data[i][0] += bias_o.data[i][0];
+      outputs.data[i][0] = sigmoid(outputs.data[i][0]);
     }
     outputs.printMatrix();
-    
+
     //output as array
     float[] output = new float[output_count];
     for (int i = 0; i < output_count; i++) {
@@ -50,7 +52,11 @@ class NN {
     }
     return output;
   }
-  
+
+  float sigmoid(float x) {
+    return 1 / (1 + exp(-x));
+  }
+
   void train(float[] training_data, float[] target) {
     //TODO
   }

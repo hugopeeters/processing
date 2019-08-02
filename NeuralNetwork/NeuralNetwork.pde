@@ -1,10 +1,12 @@
 NN brain;
 
 void setup() {
-  brain = new NN(2, 3, 1);
-  float[] in = {1, -5};
+  brain = new NN(4, 7, 3);
+  float[] in = {1, -5, 3, 11};
   float[] out = brain.feedForward(in);
-  print(out);
+  for (float x : out) {
+    print(x + ", ");
+  }
 }
 
 void draw() {
