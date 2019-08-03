@@ -45,13 +45,13 @@ void draw() {
   }
   pushMatrix();
   translate(origin.x, origin.y);
-  for (float x = 0; x < 400; x += 1) {
-    for (float y = 0; y < 400; y +=1) {
+  for (float x = 0; x < 400; x += 10) {
+    for (float y = 0; y < 400; y +=10) {
       float[] in = {(x/400), (y/400)};
       float[] out = brain.predict(in);
       //println(in[0] + ", " + in[1] + " = " + out[0]);
       fill(map(out[0], 0, 1, 0, 255));
-      rect(x, y, x+1, y+1);
+      rect(x, y, x+10, y+10);
     }
   }
   popMatrix();
