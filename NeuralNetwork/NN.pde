@@ -12,6 +12,8 @@ class NN {
   int hidden_count;
   int output_count;
   Matrix inputs, weights_ih, bias_h, hidden, weights_ho, bias_o, outputs;
+  Node[] inputNodes, hiddenNodes, outputNodes;
+  float cellSize;
 
   NN(int input_count, int hidden_count, int output_count) {
     this.input_count = input_count;
@@ -26,6 +28,22 @@ class NN {
     weights_ho.randomize();
     bias_o = new Matrix(output_count, 1);
     bias_o.randomize();
+    float cellWidth = width / 7;
+    int numCellsHigh = max(input_count, hidden_count, output_count);
+    float cellHeight = height / numCellsHigh;
+    cellSize = min(cellWidth, cellHeight);
+    inputNodes = new Node[input_count];
+    for (int i = 0; i < input_count; i++) {
+      inputNodes[i] = new Node(1.5 * cellSize, (0.5 + i) * cellSize, 0.5 * cellSize);
+    }
+    hiddenNodes = new Node[hidden_count];
+    for (int i = 0; i < hidden_count; i++) {
+      hiddenNodes[i] = new Node(3.5 * cellSize, (0.5 + i) * cellSize, 0.5 * cellSize);
+    }
+    outputNodes = new Node[output_count];
+    for (int i = 0; i < output_count; i++) {
+      outputNodes[i] = new Node(5.5 * cellSize, (0.5 + i) * cellSize, 0.5 * cellSize);
+    }
   }
 
   float[] predict(float[] input_array) {
@@ -61,7 +79,7 @@ class NN {
     return output;
   }
 
-//TRAINING
+  //TRAINING
 
   void train(float[] training_data, float[] target) {
     for (int i = 0; i < training_data.length; i++) {
@@ -74,13 +92,15 @@ class NN {
 
     //calculate hidden layer values
     hidden = dotProduct(weights_ih, inputs);
-    //println("hidden");
-    //hidden.printMatrix();
     for (int i = 0; i < hidden_count; i++) {
       hidden.data[i][0] += bias_h.data[i][0];
       hidden.data[i][0] = sigmoid(hidden.data[i][0]);
     }
+    //println("hidden");
+    //hidden.printMatrix();
 
+
+    //println("weights_ho");
     //weights_ho.printMatrix();
     //calculate output layer values
     outputs = dotProduct(weights_ho, hidden);
@@ -99,17 +119,17 @@ class NN {
     //T.printMatrix();
 
     //calculate output errors
-    Matrix errors_output = subtractMatrices(outputs, T);
+    Matrix errors_output = subtractMatrices(T, outputs);
     //println("errors_output");
     //errors_output.printMatrix();
 
     //calculate output gradient
-    Matrix gradients = new Matrix(errors_output.rows, errors_output.cols);
+    Matrix gradients = new Matrix(outputs.rows, outputs.cols);
     //println("gradients");
     //gradients.printMatrix();
     for (int i = 0; i < gradients.rows; i++) {
       for (int j = 0; j < gradients.cols; j++) {
-        gradients.data[i][j] = dsigmoid(gradients.data[i][j]);
+        gradients.data[i][j] = dsigmoid(outputs.data[i][j]);
       }
     }
     //gradients.printMatrix();
@@ -149,7 +169,7 @@ class NN {
     //hidden_gradients.printMatrix();
     for (int i = 0; i < hidden_gradients.rows; i++) {
       for (int j = 0; j < hidden_gradients.cols; j++) {
-        hidden_gradients.data[i][j] = dsigmoid(hidden_gradients.data[i][j]);
+        hidden_gradients.data[i][j] = dsigmoid(hidden.data[i][j]);
       }
     }
     //hidden_gradients.printMatrix();
@@ -170,5 +190,36 @@ class NN {
     weights_ih = addMatrices(weights_ih, weights_ih_deltas);
     //Adjust bias
     bias_h = addMatrices(bias_h, hidden_gradients);
+  }
+
+  //VISUALIZATION
+  void render() {
+    //Lines
+    //IH
+    for (int i = 0; i < hidden_count; i++) {
+      for (int j = 0; j < input_count; j++) {
+        strokeWeight(round(cellSize/20));
+        stroke(map(weights_ih.data[i][j], -5, 5, 100, 200));
+        line(hiddenNodes[i].pos.x, hiddenNodes[i].pos.y, inputNodes[j].pos.x, inputNodes[j].pos.y);
+      }
+    }
+    //HO
+    for (int i = 0; i < output_count; i++) {
+      for (int j = 0; j < hidden_count; j++) {
+        strokeWeight(round(cellSize/20));
+        stroke(map(weights_ho.data[i][j], -5, 5, 100, 200));
+        line(outputNodes[i].pos.x, outputNodes[i].pos.y, hiddenNodes[j].pos.x, hiddenNodes[j].pos.y);
+      }
+    }
+    //Nodes
+    for (Node n : inputNodes) {
+      n.render();
+    }
+    for (Node n : hiddenNodes) {
+      n.render();
+    }
+    for (Node n : outputNodes) {
+      n.render();
+    }
   }
 }
