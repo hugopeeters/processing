@@ -9,8 +9,8 @@ float[] l = {1};
 PVector origin;
 
 void setup() {
-  size(400, 400);
-  origin = new PVector(width - 100, height - 100);
+  size(800, 400);
+  origin = new PVector(width/2, 0);
   brain = new NN(2, 4, 1);
   //for (int i = 0; i < 50000; i++) {
   //  float r = floor(random(4));
@@ -32,7 +32,7 @@ void draw() {
   rectMode(CORNERS);
   brain.render();
   float r = floor(random(4));
-  for (int i = 0; i < 10; i++) {
+  for (int i = 0; i < 50; i++) {
     if (r == 0) {
       brain.train(ol, l);
     } else if (r == 1) {
@@ -45,9 +45,9 @@ void draw() {
   }
   pushMatrix();
   translate(origin.x, origin.y);
-  for (float x = 0; x < 100; x += 1) {
-    for (float y = 0; y < 100; y +=1) {
-      float[] in = {(x/100), (y/100)};
+  for (float x = 0; x < 400; x += 1) {
+    for (float y = 0; y < 400; y +=1) {
+      float[] in = {(x/400), (y/400)};
       float[] out = brain.predict(in);
       //println(in[0] + ", " + in[1] + " = " + out[0]);
       fill(map(out[0], 0, 1, 0, 255));

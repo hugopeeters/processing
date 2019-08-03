@@ -28,7 +28,7 @@ class NN {
     weights_ho.randomize();
     bias_o = new Matrix(output_count, 1);
     bias_o.randomize();
-    float cellWidth = width / 7;
+    float cellWidth = width / 14;
     int numCellsHigh = max(input_count, hidden_count, output_count);
     float cellHeight = height / numCellsHigh;
     cellSize = min(cellWidth, cellHeight);
