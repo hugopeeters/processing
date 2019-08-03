@@ -221,5 +221,7 @@ class NN {
     for (Node n : outputNodes) {
       n.render();
     }
+    //Numbers
+    
   }
 }
