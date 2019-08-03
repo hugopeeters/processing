@@ -1,17 +1,38 @@
 NN brain;
-float lr = 0.05;
+float lr = 0.1;
 float[] oo = {0, 0};
 float[] ol = {0, 1};
 float[] lo = {1, 0};
 float[] ll = {1, 1};
 float[] o = {0};
 float[] l = {1};
+PVector origin;
 
 void setup() {
-  size(600, 400);
-  brain = new NN(2, 3, 1);
-  for (int i = 0; i < 50000; i++) {
-    float r = floor(random(4));
+  size(400, 400);
+  origin = new PVector(width - 100, height - 100);
+  brain = new NN(2, 4, 1);
+  //for (int i = 0; i < 50000; i++) {
+  //  float r = floor(random(4));
+  //  if (r == 0) {
+  //    brain.train(ol, l);
+  //  } else if (r == 1) {
+  //    brain.train(lo, l);
+  //  } else if ( r == 2) {
+  //    brain.train(oo, o);
+  //  } else {
+  //    brain.train(ll, o);
+  //  }
+  //}
+}
+
+void draw() {
+  background(51);
+  noStroke();
+  rectMode(CORNERS);
+  brain.render();
+  float r = floor(random(4));
+  for (int i = 0; i < 10; i++) {
     if (r == 0) {
       brain.train(ol, l);
     } else if (r == 1) {
@@ -22,25 +43,16 @@ void setup() {
       brain.train(ll, o);
     }
   }
-}
-
-void draw() {
-  background(0);
-  brain.render();
-  //float r = floor(random(4));
-  //if (r == 0) {
-  //  brain.train(ol, l);
-  //} else if (r == 1) {
-  //  brain.train(lo, l);
-  //} else if ( r == 2) {
-  //  brain.train(oo, o);
-  //} else {
-  //  brain.train(ll, o);
-  //}
-
-  float[] out = brain.predict(ol);
-  float[] out2 = brain.predict(lo);
-  float[] out3 = brain.predict(oo);
-  float[] out4 = brain.predict(ll);
-  noLoop();
+  pushMatrix();
+  translate(origin.x, origin.y);
+  for (float x = 0; x < 100; x += 1) {
+    for (float y = 0; y < 100; y +=1) {
+      float[] in = {(x/100), (y/100)};
+      float[] out = brain.predict(in);
+      //println(in[0] + ", " + in[1] + " = " + out[0]);
+      fill(map(out[0], 0, 1, 0, 255));
+      rect(x, y, x+1, y+1);
+    }
+  }
+  popMatrix();
 }

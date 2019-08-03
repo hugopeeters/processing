@@ -69,7 +69,7 @@ class NN {
       outputs.data[i][0] += bias_o.data[i][0];
       outputs.data[i][0] = sigmoid(outputs.data[i][0]);
     }
-    outputs.printMatrix();
+    //outputs.printMatrix();
 
     //output as array
     float[] output = new float[output_count];
