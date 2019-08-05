@@ -19,10 +19,13 @@ class NN {
   float cellSize;
 
   NN(int input_count, int hidden_count, int output_count) {
+
     this.input_count = input_count;
     this.hidden_count = hidden_count;
     this.output_count = output_count;
+
     inputs = new Matrix(input_count, 1);
+
     weights_ih = new Matrix(hidden_count, input_count);
     weights_ih.randomize();
     bias_h = new Matrix(hidden_count, 1);
@@ -31,10 +34,14 @@ class NN {
     weights_ho.randomize();
     bias_o = new Matrix(output_count, 1);
     bias_o.randomize();
+
+    //parameters for rendering
     float cellWidth = width / 14;
     int numCellsHigh = max(input_count, hidden_count, output_count);
     float cellHeight = height / numCellsHigh;
     cellSize = min(cellWidth, cellHeight);
+
+    //create nodes for rendering
     inputNodes = new Node[input_count];
     for (int i = 0; i < input_count; i++) {
       inputNodes[i] = new Node(1.5 * cellSize, (0.5 + i) * cellSize, 0.5 * cellSize);
@@ -51,25 +58,21 @@ class NN {
 
   Matrix predict() {
 
-    //inputs.printMatrix();
-    //weights_ih.printMatrix();
-
-    //calculate hidden layer values
+    //calculate hidden layer values: H = sigmoid(W_ih.I + Bh)
     hidden = dotProduct(weights_ih, inputs);
-    //hidden.printMatrix();
     for (int i = 0; i < hidden_count; i++) {
       hidden.data[i][0] += bias_h.data[i][0];
       hidden.data[i][0] = sigmoid(hidden.data[i][0]);
     }
 
-    //weights_ho.printMatrix();
-    //calculate output layer values
+    //calculate output layer values: O = sigmoid(W_oh.H + Bo)
     outputs = dotProduct(weights_ho, hidden);
     for (int i = 0; i < output_count; i++) {
       outputs.data[i][0] += bias_o.data[i][0];
       outputs.data[i][0] = sigmoid(outputs.data[i][0]);
     }
-    //outputs.printMatrix();
+    
+    //return the outputs
     return outputs;
   }
 
@@ -146,5 +149,6 @@ class NN {
       n.render();
     }
     //Numbers
+    //TODO
   }
 }
