@@ -1,6 +1,6 @@
 class Vehicle {
 
-  PVector pos, vel, acc;
+  PVector pos, vel, acc, nearestFood;
   float maxForce, maxVel;
   float r;
   NN brain;
@@ -26,6 +26,7 @@ class Vehicle {
     this.ancestor = ancestor;
     performance = 100;
     best = false;
+    nearestFood = new PVector(0, 0);
   }
 
   Vehicle(PVector pos, NN brain, int gen, int ancestor) {
@@ -35,7 +36,7 @@ class Vehicle {
     maxForce = 1;
     maxVel = 5;
     r = 18;
-    this.brain = brain;
+    this.brain = brain.copy();
     this.brain.mutate();
     health = 1;
     birthDate = frameCount;
@@ -43,26 +44,29 @@ class Vehicle {
     this.ancestor = ancestor;
     performance = 100;
     best = false;
+    nearestFood = new PVector(0, 0);
   }
 
   void update() {
     //gather sensory inputs
-    PVector nearestFood = seekList(food);
-    brain.inputs.data[0][0] = nearestFood.x; //vector to food x
-    brain.inputs.data[1][0] = nearestFood.y; //vector to food y
+    nearestFood = seekList(food);
+    this.brain.inputs.data[0][0] = nearestFood.x / 400; //vector to food x
+    this.brain.inputs.data[1][0] = nearestFood.y / 400; //vector to food y
 
 
     //think about actions to take
-    Matrix actions = brain.predict();
-    PVector steeringForce = new PVector(actions.data[0][0], actions.data[1][0]);
+    Matrix actions = this.brain.predict();
+    PVector desiredVel = new PVector(actions.data[0][0] * 400, actions.data[1][0] * 400);
+    PVector steeringForce = desiredVel.copy().sub(this.vel);
+    steeringForce.limit(maxForce);
 
     //act
     applyForce(steeringForce);
 
     //apply physics
-    if (acc.mag() == 0 && vel.mag() == 0) {
-      acc = PVector.random2D().setMag(maxForce);
-    }
+    //if (acc.mag() == 0 && vel.mag() == 0) {
+    //  acc = PVector.random2D().setMag(maxForce);
+    //}
     vel.add(acc);
     vel.limit(maxVel);
     pos.add(vel);
@@ -98,14 +102,15 @@ class Vehicle {
 
   PVector seekList(ArrayList<Food> list) {
     Food closest = null;
+    PVector returnVector = new PVector(0, 0);
     for (int i = list.size() - 1; i >= 0; i--) {
       float dist = dist(pos.x, pos.y, list.get(i).pos.x, list.get(i).pos.y);
       if (dist < 5) {
         //eat the food
         if (list.get(i).good) {
-          health += 0.2;
+          this.health += 0.2;
         } else {
-          health -= 0.75;
+          this.health -= 0.75;
         }
         list.remove(i);
       } else {
@@ -113,15 +118,17 @@ class Vehicle {
       }
     }
     if (closest != null) {
-      return closest.pos.copy().sub(pos);
-    } else {
-      return new PVector(0, 0);
-    }
+      returnVector.x = closest.pos.x - this.pos.x;
+      returnVector.y = closest.pos.y - this.pos.y;
+    } 
+    return returnVector;
   }
 
   void render() {
     pushMatrix();
     translate(pos.x, pos.y);
+    stroke(255);
+    line(0, 0, nearestFood.x, nearestFood.y);
     rotate(vel.heading() + PI/2);
     beginShape();
     //color c = lerpColor(color(255, 0, 0), color(0, 255, 0), health);

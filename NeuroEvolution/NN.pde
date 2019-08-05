@@ -1,5 +1,5 @@
 float mr = 1.1; //mutation rate
-float mc = 0.1; //mutation chance
+float mc = 0.5; //mutation chance
 
 float sigmoid(float x) {
   return 1 / (1 + exp(-x));
@@ -76,10 +76,10 @@ class NN {
   //procreation
   NN copy() {
     NN targetBrain = new NN(this.input_count, this.hidden_count, this.output_count);
-    targetBrain.weights_ih = this.weights_ih;
-    targetBrain.weights_ho = this.weights_ho;
-    targetBrain.bias_h = this.bias_h;
-    targetBrain.bias_o = this.bias_o;
+    targetBrain.weights_ih = this.weights_ih.copy();
+    targetBrain.weights_ho = this.weights_ho.copy();
+    targetBrain.bias_h = this.bias_h.copy();
+    targetBrain.bias_o = this.bias_o.copy();
     return targetBrain;
   }
 

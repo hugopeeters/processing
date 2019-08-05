@@ -46,7 +46,7 @@ void setup() {
     vehicles.add(new Vehicle(new PVector(random(field[0].x, field[1].x), random(field[0].y, field[1].y)), i));
   }
   food = new ArrayList<Food>();
-  addPoison();
+  //addPoison();
   addFood();
 }
 
@@ -64,19 +64,19 @@ void draw() {
     v.avoidEdges();
     v.update();
     //clone
-    if (random(1) < 0.017 * v.health) {
+    if (random(1) < 0.015 * v.health) {
       vehicles.add(new Vehicle(new PVector(random(field[0].x, field[1].x), random(field[0].y, field[1].y)), v.brain.copy(), v.generation + 1, v.ancestor));
     }
     //death
     if (v.health <= 0) {
-      food.add(new Food(v.pos.copy(), true, food.size()));
+      //food.add(new Food(v.pos.copy(), true, food.size()));
       vehicles.remove(i);
     }
   }
 
   //keep adding food
   if (food.size() < 100 + vehicles.size()) {
-    addPoison();
+    //addPoison();
     addFood();
   }
 

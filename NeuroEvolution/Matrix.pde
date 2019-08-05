@@ -10,11 +10,23 @@ class Matrix {
     this.data = new float[rows][cols];
   }
 
+  Matrix copy() {
+    Matrix copiedMatrix = new Matrix(this.rows, this.cols);
+    for (int i = 0; i < this.rows; i++) {
+      for (int j = 0; j < this.cols; j++) {
+        copiedMatrix.data[i][j] = this.data[i][j];
+      }
+    }
+    return copiedMatrix;
+  }
+
   void randomize() {
     for (int i = 0; i < this.rows; i++) {
       for (int j = 0; j < this.cols; j++) {
         //this.data[i][j] = floor(random(10)); //random integers between 0 and 10
         this.data[i][j] = random(2) - 1; //random values between -1 and +1
+        //this.data[i][j] = random(20) - 10; //random values between -10 and +10
+        //this.data[i][j] = 0; //all zeroes
       }
     }
   }
