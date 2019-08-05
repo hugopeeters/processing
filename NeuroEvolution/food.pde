@@ -27,7 +27,7 @@ class Food {
 
 //GLOBAL FUNCTIONS
 void addPoison() {
-  while (countPoison() < vehicles.size() / 4) {
+  while (countPoison() < numStarters / 4) {
     food.add(new Food(new PVector(random(field[0].x + 5, field[1].x - 5), random(field[0].y + 5, field[1].y - 5)), false, food.size()));
   }
 }

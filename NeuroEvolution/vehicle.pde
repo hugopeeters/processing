@@ -1,4 +1,4 @@
-class Vehicle {
+class Vehicle implements Comparable<Vehicle>{
 
   PVector pos, vel, acc;
   float maxForce, maxVel;
@@ -10,7 +10,7 @@ class Vehicle {
   int generation;
   int ancestor;
   float performance;
-  boolean best;
+  boolean alive, best;
 
   //constructor for initial set of vehicles (ancestors)
   Vehicle(PVector pos, int ancestor) {
@@ -23,14 +23,14 @@ class Vehicle {
     brain = new NN(input_count, hidden_count, output_count);
     health = 1;
     birthDate = 0;
-    generation = 0;
     this.ancestor = ancestor;
     performance = 100;
+    alive = true;
     best = false;
   }
 
   //constructor for later generations of vehicles (children)
-  Vehicle(PVector pos, NN brain, int gen, int ancestor) {
+  Vehicle(PVector pos, NN brain, int ancestor) {
     this.pos = pos;
     vel = new PVector(0, 0);
     acc = new PVector(0, 0);
@@ -41,9 +41,9 @@ class Vehicle {
     this.brain.mutate();
     health = 1;
     birthDate = frameCount;
-    generation = gen;
     this.ancestor = ancestor;
     performance = 100;
+    alive = true;
     best = false;
   }
 
@@ -129,6 +129,10 @@ class Vehicle {
     return returnVector;
   }
 
+  void die() {
+    this.alive = false;
+  }
+
   void render() {
     pushMatrix();
     translate(pos.x, pos.y);
@@ -145,4 +149,9 @@ class Vehicle {
     endShape(CLOSE);
     popMatrix();
   }
+  
+  @Override
+    int compareTo(Vehicle other) {
+      return round(this.performance - other.performance);
+    }
 }
