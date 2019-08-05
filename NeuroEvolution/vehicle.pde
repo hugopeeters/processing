@@ -27,7 +27,6 @@ class Vehicle {
     this.ancestor = ancestor;
     performance = 100;
     best = false;
-    nearestFood = new PVector(0, 0);
   }
 
   //constructor for later generations of vehicles (children)
@@ -46,7 +45,6 @@ class Vehicle {
     this.ancestor = ancestor;
     performance = 100;
     best = false;
-    nearestFood = new PVector(0, 0);
   }
 
   void update() {
