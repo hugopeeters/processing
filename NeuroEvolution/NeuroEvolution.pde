@@ -2,7 +2,7 @@ import java.util.Collections;
 
 //NeuralNetwork
 int input_count = 2;
-int hidden_count = 16;
+int hidden_count = 4;
 int output_count = 2;
 
 //vehicles

@@ -23,7 +23,7 @@ void nextGen() {
   population.add(new Generation());
   Generation newGen = population.get(population.size() - 1);
   //the best half of the previous generation procreate
-  for (int i = lastGen.vehicles.size() - 1; i > floor(numStarters / 2); i--) {
+  for (int i = numStarters - 1; i >= (numStarters / 2); i--) {
     Vehicle parentV = lastGen.vehicles.get(i);
     //two children are born
     Vehicle childV1 = new Vehicle(new PVector(random(field[0].x, field[1].x), random(field[0].y, field[1].y)), parentV.brain.copy(), parentV.ancestor);
@@ -31,4 +31,5 @@ void nextGen() {
     Vehicle childV2 = new Vehicle(new PVector(random(field[0].x, field[1].x), random(field[0].y, field[1].y)), parentV.brain.copy(), parentV.ancestor);
     newGen.vehicles.add(childV2);
   }
+  println(newGen.vehicles.size());
 }

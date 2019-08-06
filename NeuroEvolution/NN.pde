@@ -1,5 +1,5 @@
-float mr = 1.1; //mutation rate
-float mc = 0.5; //mutation chance
+float mr = 10; //mutation rate
+float mc = 0.75; //mutation chance
 
 float sigmoid(float x) {
   return 1 / (1 + exp(-x));

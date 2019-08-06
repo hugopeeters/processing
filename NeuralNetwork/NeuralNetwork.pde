@@ -32,7 +32,7 @@ void draw() {
   rectMode(CORNERS);
   brain.render();
   float r = floor(random(4));
-  for (int i = 0; i < 50; i++) {
+  for (int i = 0; i < 10; i++) {
     if (r == 0) {
       brain.train(ol, l);
     } else if (r == 1) {
