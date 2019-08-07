@@ -2,6 +2,7 @@
 //objects
 Paddle paddle;
 Ball ball;
+Grid grid;
 
 void setup() {
   size(1200, 800);
@@ -9,6 +10,7 @@ void setup() {
   //create objects
   paddle = new Paddle(width / 2);
   ball = new Ball(width / 2, height / 2);
+  grid = new Grid();
 }
 
 void draw() {
@@ -21,6 +23,7 @@ void draw() {
   //render objects
   paddle.render();
   ball.render();
+  grid.render();
 }
 
 void keyPressed() {
