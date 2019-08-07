@@ -48,7 +48,7 @@ class Drop {
 
   void render() {
     noFill();
-    stroke(0, 100, 255, 150);
+    stroke(200, 200, 255, 150);
     strokeWeight(1 * z);
     line(ppos.x, ppos.y, pos.x, pos.y);
   }
