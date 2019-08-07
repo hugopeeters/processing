@@ -1,10 +1,14 @@
+
+//objects
 Paddle paddle;
+Ball ball;
 
 void setup() {
   size(1200, 800);
   
   //create objects
   paddle = new Paddle(width / 2);
+  ball = new Ball(width / 2, height / 2);
 }
 
 void draw() {
@@ -12,9 +16,11 @@ void draw() {
   
   //update objects
   paddle.update();
+  ball.update();
   
   //render objects
   paddle.render();
+  ball.render();
 }
 
 void keyPressed() {
