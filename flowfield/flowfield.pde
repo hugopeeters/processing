@@ -1,4 +1,4 @@
-int fieldResolution = 10;
+int fieldResolution = 50;
 float fieldScale = 0.001;
 float changeRate = 0.0025;
 int x, y;
