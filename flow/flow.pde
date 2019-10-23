@@ -1,13 +1,17 @@
 int fieldResolution = 10;
 float fieldScale = 0.01;
 float changeRate = 0.0005;
-int numP = 1000;
+int numP = 5000;
+float lineOpacity = 4;
+float fieldForce = 1;
+float maxVel = 5;
+boolean showVectors = false;
+
 int x, y;
 float xoff, yoff;
 float zoff = 0;
 int cols, rows;
 PVector[][] flowfield;
-
 Particle[] particles;
 
 void setup() {
@@ -35,13 +39,15 @@ void draw() {
       flowfield[x][y] = PVector.fromAngle(noise(xoff, yoff, zoff) * TWO_PI);
       ;
 
-      //DRAW VECTORS
-      //pushMatrix();
-      //translate(x * fieldResolution, y * fieldResolution);
-      //rotate(flowfield[x][y].heading());
-      //stroke(255);
-      //line(0, 0, fieldResolution*0.75, 0);
-      //popMatrix();
+      if (showVectors) {
+        //DRAW VECTORS
+        pushMatrix();
+        translate(x * fieldResolution, y * fieldResolution);
+        rotate(flowfield[x][y].heading());
+        stroke(255, 1);
+        line(0, 0, fieldResolution*0.75, 0);
+        popMatrix();
+      }
     }
   }
   zoff += changeRate;

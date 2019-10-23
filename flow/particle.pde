@@ -2,7 +2,6 @@ class Particle {
 
   PVector ppos, pos, vel, acc;
   float radius;
-  float maxVel = 10;
 
   Particle(PVector pos) {
     this.pos = pos;
@@ -17,13 +16,14 @@ class Particle {
     //fill(frameCount / 10 % 255, 255, 255, 100);
     //ellipse(pos.x, pos.y, radius, radius);
     strokeWeight(1);
-    stroke(frameCount / 10 % 255, 255, 255, 10);
+    stroke(frameCount / 10 % 255, 255, 255, lineOpacity);
+    //stroke(random(25), 255, 255, lineOpacity);
     line(ppos.x, ppos.y, pos.x, pos.y);
   }
 
   void update() {
     PVector force = flowfield[round(pos.x/fieldResolution)][round(pos.y/fieldResolution)];
-    force.setMag(0.5);
+    force.setMag(fieldForce);
     acc.add(force);
     vel.add(acc);
     vel.limit(maxVel);
