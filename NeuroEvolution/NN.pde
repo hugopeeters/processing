@@ -149,6 +149,6 @@ class NN {
       n.render();
     }
     //Numbers
-    //TODO
+    //TODO test
   }
 }
